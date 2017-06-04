@@ -6,7 +6,9 @@ var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 module.exports = function (app, passport) {
 
 	function isLoggedIn (req, res, next) {
+			return next();
 		if (req.isAuthenticated()) {
+			
 			return next();
 		} else {
 			res.redirect('/login');
