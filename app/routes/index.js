@@ -30,10 +30,18 @@ module.exports = function (app, passport) {
 			req.logout();
 			res.redirect('/login');
 		});
-	app.route('/getInfo?:q')
-		.get(search.callApiByCityName);
 		
+	app.route('/results?:q')	
+		.get(search.redirectTo);
+		
+	app.route('/res/:city')
+		.get(function(req,res) {
+			res.sendFile(path+'/public/results.html');
+		});
+	
+	app.route('/res/:city/getInfo')
+		.get(search.callApiByCityName);	
 
 
 	
-};
+}
