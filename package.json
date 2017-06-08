@@ -36,6 +36,7 @@
     "node-yelp-api-v3": "^1.0.1",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
+    "remove-accents": "^0.4.0",
     "yelpv3": "^1.2.1"
   }
 }

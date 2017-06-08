@@ -41,7 +41,16 @@ module.exports = function (app, passport) {
 	
 	app.route('/res/:city/getInfo')
 		.get(search.callApiByCityName);	
-
-
 	
-}
+	app.route('/res/:city/:count/getMore')
+		.get(search.getMore);
+		
+	app.route('/goTo/:id')
+		.get(function(req,res){
+			res.sendFile(path+'/public/goTo.html');
+		});
+		
+	app.route('/goTo/:id/getInfo')
+		.get(search.callApiById);
+	
+};

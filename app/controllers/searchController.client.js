@@ -13,6 +13,6 @@
     body.style.background=background;
     body.style['background-size']= 'cover';
     body.style.width='100%';
-    body.style.height='710px';
+    body.style.height='750px';
     
 })();

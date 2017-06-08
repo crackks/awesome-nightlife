@@ -11,10 +11,18 @@
 
 	
 
-	<body style='background:rgb(100,100,100)'>
-	    <h1 class='text-center'>Awesome Night Life</h1>
-		<div class="results">
+	<body style='background:rgb(30,30,50)'>
+	    <a href='/' style='text-decoration:none'><h1 class='text-center appName'>Awesome Night Life</h1></a>
+	    <div class='filters'>
+	    	<p>Select :</p>
+	    	<button class='btn rating'>Rating</button>
+	    	<button class='btn categories'>Categories</button>
+	    </div>
+		<div class="results"></div>
+		<div class='more'style='display:none'>
+			<button class='btn getMore-btn'>Get More!</button>
 		</div>
+		
 		
 		<script type="text/javascript" src="../common/ajax-functions.js"></script>
 		<script type='text/javascript' src='../controllers/resultsController.client.js'></script>

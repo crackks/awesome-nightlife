@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Awesome Night Life - Search</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	
+
+	<body style='background:rgb(30,30,50)'>
+	    <a href='/' style='text-decoration:none'><h1 class='text-center appName'>Awesome Night Life</h1></a>
+		<div class='pageResult'>
+		    <h2><span id='name'></span></h2>
+		    <div class='dispRow' style='margin-top:20px'>
+			    <p><span id='rating'></span>/5 </p>
+			    <p class='separator'> | </p>
+			    <p><span id='review'></span> reviews</p>
+			    <p class='separator'> | </p>
+			    <p><span id='categorie'></span></p>
+			    <p class='separator'> | </p>
+			    <p><span class="glyphicon glyphicon-earphone"></span><span id='phoneNbr'></span></p>
+		    </div>
+		    <div class='dispRow'>
+			    <p><span class="glyphicon glyphicon-map-marker"></span><span id='address'></span></p>
+			    <p class='separator'> | </p>
+	            <p><span class="glyphicon glyphicon-phone"></span><a id='webSite' target="_blank">Go to Website</a></p>    
+		    </div>
+		    <div class=' imageDisp'>
+		    	<div class='col-xs-8'>
+			    	<img class='imageL'id="image"/>
+			    </div>
+			    <div class='col-xs-4'>
+				    <img class='imageS'id="image2"/>
+				    <img class='imageS'id="image3"/>
+			    </div>
+		    </div>
+		    <button class='goingThere btn'style='margin:20px auto 10px auto'><span id='nbrGoing'>0</span> Going</button>
+		</div>
+		
+		<script type="text/javascript" src="../common/ajax-functions.js"></script>
+		<script type='text/javascript' src='/controllers/goToController.client.js'></script>
+	</body>
+
+</html>
