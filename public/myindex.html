@@ -5,6 +5,7 @@
 	<head>
 		<title>Awesome Night Life - Search</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
 
@@ -14,11 +15,13 @@
 		<div class="container">
 			<a href='/' style='text-decoration:none'><h1 class='text-center appName'>Awesome Night Life</h1></a>
 			<form action='results'>
-			    <input type='text' name='city' placeholder="Search: type the name of the city you're looking for!"/ required='required'>
+			    <input type='text' name='city' placeholder="&#xF002; Type the name of the city you're looking for!" style="font-family:Arial, FontAwesome"required='required'/>
 			    <input type="submit" value='Submit' class='btn submit-btn'/>
+			    
 			</form>
+			<i class="fa fa-map-marker icon-location fa-2x" aria-hidden="true"></i>
 		</div>
-		
+		<a class='redirect' style='display:none'></a>
 		<script type="text/javascript" src="common/ajax-functions.js"></script>
 		<script type='text/javascript' src='controllers/searchController.client.js'></script>
 	</body>

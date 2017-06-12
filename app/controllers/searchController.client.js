@@ -8,11 +8,36 @@
                     '/public/img/city-cars-traffic-lights.jpeg',
                     '/public/img/city-marketing-lights-night.jpg'];
     var rdm=Math.floor(Math.random()*backgrounds.length);
-    console.log(rdm);
     var background='url('+backgrounds[rdm]+') no-repeat center center';
     body.style.background=background;
     body.style['background-size']= 'cover';
     body.style.width='100%';
     body.style.height='750px';
+    
+    var icon=document.querySelector('.icon-location');
+    var redirect=document.querySelector(".redirect");
+    
+    icon.addEventListener('click',function(){
+        if (window.navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(function(position){
+                var lat=position.coords.latitude;
+                var long=position.coords.longitude; 
+                console.log(lat);
+                console.log(long);
+                var apiUrl=window.location.origin+'/location/'+lat+'/'+long;
+                ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, showInfo));
+            });
+        } 
+        
+    });
+    
+    
+    function showInfo(data){
+        data=JSON.parse(data);
+        redirect.href=data.route;
+        redirect.click();
+    }
+    
+    
     
 })();

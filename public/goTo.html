@@ -5,6 +5,7 @@
 	<head>
 		<title>Awesome Night Life - Search</title>
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
 		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
@@ -15,33 +16,42 @@
 	    <a href='/' style='text-decoration:none'><h1 class='text-center appName'>Awesome Night Life</h1></a>
 		<div class='pageResult'>
 		    <h2><span id='name'></span></h2>
+		    
 		    <div class='dispRow' style='margin-top:20px'>
-			    <p><span id='rating'></span>/5 </p>
+			    <div id='rating'></div>
 			    <p class='separator'> | </p>
-			    <p><span id='review'></span> reviews</p>
+			    <p><span id='review'></span> <a id='reviewTxt' style='color:rgb(51,51,51); ' href='#nbrGoing'>reviews</a></p>
 			    <p class='separator'> | </p>
 			    <p><span id='categorie'></span></p>
 			    <p class='separator'> | </p>
-			    <p><span class="glyphicon glyphicon-earphone"></span><span id='phoneNbr'></span></p>
+			    <p><i class="fa fa-phone fa-lg" aria-hidden="true"></i> <span id='phoneNbr'></span></p>
 		    </div>
 		    <div class='dispRow'>
-			    <p><span class="glyphicon glyphicon-map-marker"></span><span id='address'></span></p>
+			    <p><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>  <a id='map' style='color:rgb(51,51,51); ' href='#nbrGoing' ><span id='address'></span></a></p>
 			    <p class='separator'> | </p>
-	            <p><span class="glyphicon glyphicon-phone"></span><a id='webSite' target="_blank">Go to Website</a></p>    
+	            <p><i class="fa fa-laptop fa-lg" aria-hidden="true"></i> <a id='webSite' target="_blank">Go to Website</a></p>    
 		    </div>
 		    <div class=' imageDisp'>
 		    	<div class='col-xs-8'>
-			    	<img class='imageL'id="image"/>
+			    	<a id='img1Link' ><img class='imageL'id="image"/></a>
 			    </div>
 			    <div class='col-xs-4'>
-				    <img class='imageS'id="image2"/>
-				    <img class='imageS'id="image3"/>
+				    <a id='img2Link' ><img class='imageS'id="image2"/></a>
+				    <a id='img3Link'><img class='imageS'id="image3"/></a>
 			    </div>
 		    </div>
-		    <button class='goingThere btn'style='margin:20px auto 10px auto'><span id='nbrGoing'>0</span> Going</button>
+		    <a class='btnLink'><button class='going-btn btn'style='margin:20px auto 10px 110%'><span id='nbrGoing'></span> Going</button>
+			</a>
 		</div>
+		<div class='reviewBlock' id='dispReviews' style='display:none'>
+			<div class="reviewStart"><h2 style='font-family:Lobster; font-size:30px'>Reviews</h2><p> 3out of <span id='reviewNbr'></span></p></div>
+			<div class='dispReviews'></div>
+			<div class='reviewEnd'></div>
+		</div>
+		<div class='dispMap' id='dispMap'></div>
+		<div class='otherCat'></div>
 		
-		<script type="text/javascript" src="../common/ajax-functions.js"></script>
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
 		<script type='text/javascript' src='/controllers/goToController.client.js'></script>
 	</body>
 

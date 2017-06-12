@@ -23,7 +23,7 @@ module.exports = function (passport) {
 	    		if (!user){
 	    			return done(null,false,{message:'Unknown User'});
 	    		}
-	    		User.verifyPassword(password,user.info.Password,function(err,match){
+	    		User.verifyPassword(password,user.Password,function(err,match){
 	    			if (err) throw err;
 	    			if(match){
 	    				return done(null,user);

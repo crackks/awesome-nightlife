@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Awesome Night Life - Search</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link href="../../../../public/css/login.css" rel="stylesheet" type="text/css">
+	</head>
+
+	
+
+	<body>
+		<div class=box>
+			<div ='btn-container'>
+				<button class='text-center btn loginBtn'>Login</button>
+				<button class='text-center btn signUpBtn'>Register</button>	
+			</div>
+			<div class='form-container'>
+				<form action='log' class='loginBlock' method='post'>
+					<input type='text' name='username' required="required" placeholder="User Name" class='logUserName'>
+					<input type='password' name='password' requied='requied' placeholder='Password 'class='logPassUser'>
+					<input type='submit' value='submit'class='logSubmitBtn'>
+				</form>
+				
+				
+			
+				<form action='sign' class='signUpBlock' method='post' style="display:none">
+					<input type='email' name='mail' required="required" placeholder="E-mail adress" class='logUserName'>
+					<input type='text' name='userName' required="required" placeholder="User Name" class='logUserName'>
+					<input type='password' name='ps' requied='required' placeholder='Password 'class='logPassUser'>
+					<input type='password' name='Cps' requied='required' placeholder='Confirm Password 'class='logPassUser'>
+					<input type='submit' value='submit'class='logSubmitBtn'>
+				</form>
+				
+			{{#if success_msg}}
+				<div class="alert alert-success text-center">{{success_msg}}</div>
+			{{/if}}
+			{{#if errors}}
+				{{#each errors}}
+					<div class="alert alert-danger text-center ">{{msg}}</div>
+				{{/each}}
+			{{/if}}
+			
+			{{#if error}}
+				<div class="alert alert-danger text-center">{{error}}</div>
+			{{/if}}
+			
+			{{#if error_msg}}
+				<div class="alert alert-danger text-center">{{error_msg}}</div>
+			{{/if}}
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="../../../../common/ajax-functions.js"></script>
+		<script type="text/javascript" src="../../../../controllers/loginController.client.js"></script>
+	</body>
+
+</html>
+
+
+
+		

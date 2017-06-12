@@ -9,7 +9,7 @@ function User(){
         var userName=req.body.userName;
         var userEmail=req.body.mail;
         var ps=req.body.ps;
-        
+        var direction=req.params.city+"/"+req.params.id;
         req.checkBody('userName','The user name should have between 5 and 12 characters').len(5,12);
         req.checkBody('ps','Passwords do not match').equals(req.body.Cps);
         req.checkBody("userName","You CAN'T use symbol in your user name").matches(/[A-Za-z0-9]/);
@@ -22,44 +22,38 @@ function User(){
             var hps="";
             var id=crypto.createHash('sha1').update(userName).digest('hex');
             var newUser=new Users({_id:id,
-                                    info:{
-                                        userName:userName,
-	                                    Email:userEmail,
-	                                    Password:hps
-                                        },
-	                                poll:{
-	                                    pollCreated:[],
-                                	    pollVoted:[],
-                                        nbrVote:0,
-                                         }
+                                    userName:userName,
+                                    Email:userEmail,
+                                    Password:hps,
+                                    isGoingTo:[]
                                     });
             bcrypt.genSalt(10, function(err, salt) {
                 if (err){throw err}
                 bcrypt.hash(ps, salt, function(err, hash) {
                     if (err){throw err;}
-                    newUser.info.Password=hash;
-                    Users.find({'info.userName':userName}).exec(function(err,data){
+                    newUser.Password=hash;
+                    Users.find({'userName':userName}).exec(function(err,data){
                         if (err){throw err}
                         if (!data[0]){
-                            Users.find({'info.Email':userEmail}).exec(function(err,data2){
+                            Users.find({'Email':userEmail}).exec(function(err,data2){
                                 if(err){throw err}
                                 if(!data2[0]){
                                     newUser.save(function(err,data){
                                         if (err){throw err}
                                         req.flash('success_msg','You are registered! You can now login.');
-                                        res.redirect('/login');
+                                        res.redirect('/isGoingTo/'+direction+'/login');
                                         
                                     });
                                 }
                                 else{
                                     req.flash('error_msg','This email adress is already use');
-                                    res.redirect('/login');
+                                    res.redirect('/isGoingTo/'+direction+'/login');
                                 }
                             });
                         }
                         else{
                             req.flash('error_msg','This user name is already use');
-                            res.redirect('/login');
+                            res.redirect('/isGoingTo/'+direction+'/login');
                         }
                     });
                     
@@ -70,7 +64,7 @@ function User(){
             
     
     this.getByUserName=function(userName,callback){
-        Users.findOne({'info.userName':userName},callback)};
+        Users.findOne({'userName':userName},callback)};
         
     this.getById=function(id,callback){
         Users.findById(id,callback)};
@@ -83,14 +77,7 @@ function User(){
         });
     };
     
-    this.getProfile=function(req,res){
-        var userInfo=req.user.info;
-        var userPoll=req.user.poll;
-        var poll=userPoll.pollCreated;
-        var nbrPoll=poll.length;
-        var nbrVote=userPoll.pollVoted.length;
-        res.json({userName:userInfo.userName,nbrVote:nbrVote,nbrPoll:nbrPoll});
-    };
+    
     
 }
 

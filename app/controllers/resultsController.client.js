@@ -18,17 +18,23 @@
     
     function showInfo(data){
         var info=JSON.parse(data);
-        console.log(info)
         var business=info.businesses;
         console.log(business[0])
         for (var i=0;i<business.length;i++){
-            var txt="<div class='oneResult'><a href='/goTo/"+business[i].id+"'><img class='resImg' src="+business[i].image_url+" /></a><div class='resContent'><p style='font-family:Lobster'><a style='color:rgb(50,50,50)' href='/goTo/"+business[i].id+"'>" +business[i].name+"</a> ("+business[i].categories[0].title+")</p><p>"+dispAddress(business[i].location)+"</p><p> Rating :"+business[i].rating+" / 5</p><button class='going-btn btn'><span id='going'>0 </span> Going</button></div></div>";
+            var txt="<div class='oneResult'><a href='/goTo/"+business[i].location.city+"/"+business[i].id+"'><img class='resImg' src=";
+            txt+=business[i].image_url+" /></a><div class='resContent'><p style='font-family:Lobster; font-size:20px'><a style='color:rgb(50,50,50)' href='/goTo/"+business[i].location.city+"/";
+            txt+=business[i].id+"'>" +business[i].name+"</a> ("+business[i].categories[0].title+")</p><p>";
+            txt+=dispAddress(business[i].location)+"</p><p>"+dispRating(business[i].rating);
+            txt+="</p><a style='text-decoration:none' href='/isGoingTo/"+business[i].location.city+"/0/"+business[i].id+"'><button  class='going-btn btn'>"+business[i].nbrGoing+" Going</button></a></div></div>";
             result.insertAdjacentHTML('beforeend', txt);
             Lights();
         }
         
         if (info.total>count*10){
             more.style.display='flex';
+        }
+        else{
+            more.style.display='none';
         }
     }
     
@@ -42,12 +48,32 @@
     
     function dispAddress(addresses){
         if (addresses.address2){
-            return addresses.address1+", "+addresses.address2;
+            return addresses.address1+", "+addresses.address2+','+addresses.city;
         }
         else{
-            return addresses.address1;
+            return addresses.address1+', '+addresses.city;
         }
     }
     
+    function dispRating(rating){
+        var txt="<div class='rating-container'>";
+        var rat=rating*2;
+        if (rat%2==0){
+            for (var i=0;i<rat/2;i++){
+                txt+='<i class="fa fa-star" aria-hidden="true"></i>';
+            }
+        }
+        else{
+            for (var i=0;i<rat/2-1;i++){
+                txt+='<i class="fa fa-star" aria-hidden="true"></i>';
+            }
+            txt+='<i class="fa fa-star-half-o" aria-hidden="true"></i>';
+        }
+        for(var j=0;j<9-rat;j++){
+            txt+='<i class="fa fa-star-o" aria-hidden="true"></i>';
+        }
+        txt+='</div>';
+        return txt;
+    }
     
 })();
