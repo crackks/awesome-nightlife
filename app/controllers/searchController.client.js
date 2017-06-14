@@ -12,18 +12,16 @@
     body.style.background=background;
     body.style['background-size']= 'cover';
     body.style.width='100%';
-    body.style.height='750px';
+    body.style.height='850px';
     
     var icon=document.querySelector('.icon-location');
-    var redirect=document.querySelector(".redirect");
+    var redirect=document.querySelector("#redirect");
     
     icon.addEventListener('click',function(){
         if (window.navigator.geolocation) {
             window.navigator.geolocation.getCurrentPosition(function(position){
                 var lat=position.coords.latitude;
                 var long=position.coords.longitude; 
-                console.log(lat);
-                console.log(long);
                 var apiUrl=window.location.origin+'/location/'+lat+'/'+long;
                 ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, showInfo));
             });

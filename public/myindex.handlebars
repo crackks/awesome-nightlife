@@ -20,8 +20,14 @@
 			    
 			</form>
 			<i class="fa fa-map-marker icon-location fa-2x" aria-hidden="true"></i>
+			{{#if error_msg}}
+				<div class="alert alert-danger text-center" style='width:45%; margin-top:50px'>{{error_msg}}</div>
+		{{/if}}
 		</div>
-		<a class='redirect' style='display:none'></a>
+		
+		
+		<a id=redirect></a>
+		
 		<script type="text/javascript" src="common/ajax-functions.js"></script>
 		<script type='text/javascript' src='controllers/searchController.client.js'></script>
 	</body>

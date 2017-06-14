@@ -2,7 +2,7 @@
 
 (function(){
     
-    var apiUrl=window.location.href+'/getInfo';
+    var apiUrl=check(window.location.href)+'/getInfo';
     
     var name=document.querySelector('#name');
     var categorie=document.querySelector("#categorie");
@@ -19,110 +19,58 @@
     var imag2Link=document.querySelector('#img2Link');
     var imag3Link=document.querySelector('#img3Link');
     var nbrGoing=document.querySelector('#nbrGoing');
-    var reviexTxtBtn=document.querySelector('#reviewTxt');
+    var reviewTxtBtn=document.querySelector('#reviewTxt');
     var reviewBlock=document.querySelector('.reviewBlock');
     var dispReview=document.querySelector('.dispReviews');
     var reviewNbr=document.querySelector('#reviewNbr');
     var mapBlock=document.querySelector('.dispMap');
     var otherCatBlock=document.querySelector('.otherCat');
+    var addScript=document.querySelector('#Scri');
     var lat;
     var lng;
     
-    var revClicked=false;
-    var mapClicked=false;
-    var otherCatClicked=false;
-    
-    function showInfo(data){
-        var info=JSON.parse(data);
-        console.log(info);
-        name.innerHTML=info.name;
-        for (var i=0;i<info.categories.length;i++){
-            categorie.innerHTML+=info.categories[i].title;
-            if (i<info.categories.length-1){
-                categorie.innerHTML+=', ';
-            }
-        }
-        phoneNbr.innerHTML=info.display_phone;
-        for (var i=0;i<info.location.display_address.length;i++){
-            address.innerHTML+=info.location.display_address[i];
-            if (i<info.location.display_address.length-1){
-                address.innerHTML+=', ';
-            }
-        }
-        
-        review.innerHTML=info.review_count;
-        website.href=info.url;
-        image.src=info.image_url;
-        imag1Link.href=info.image_url;
-        image2.src=info.photos[1];
-        imag2Link.href=info.photos[1];
-        image3.src=info.photos[2];
-        imag3Link.href=info.photos[2];
-        going.href="/isGoingTo/"+info.location.city+"/1/"+info.id;
-        nbrGoing.innerHTML=info.nbrGoing;
-        lat=info.coordinates.latitude;
-        lng=info.coordinates.longitude;
-        ratingStars.insertAdjacentHTML('beforeend', dispRating(info.rating));
-    }
     address.addEventListener('click',function(){
         console.log(lat);
         console.log(lng);
-        var apiMapUrl=window.location.origin+'/test/'+lat+'/'+lng;
-        ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiMapUrl, showMap));
-    })
-    
-    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, showInfo));
-    
-    
-    reviexTxtBtn.addEventListener('click',function(){
-        if (!revClicked){
-        var apiRevUrl=window.location.href+'/'+window.navigator.language+'/reviews';
-        ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiRevUrl, showReviews));
-        }
+        //var apiMapUrl=check(window.location.origin)+'/test/'+lat+'/'+lng;
+        //ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiMapUrl, showMap));
+        //var txt='<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk9TZizW1ZoGP-RsV7eqPu-QGtwnvfims&callback=initMap" async defer></script>';
+        //addScript.insertAdjacentHTML('beforeend',txt)
         
     })
     
+    
+    function check(url){
+        for (var i=0; i<url.length;i++){
+            if(url[i]=='#'){
+                url=url.slice(0,i);
+                return url;
+            }
+        }
+        return url;
+    }
+    
+    
+    
     function showReviews(data){
-        revClicked=true;
-        mapClicked=false;
-        otherCatClicked=false;
         var info=JSON.parse(data);
-        console.log(info);
-        reviewBlock.style.display='flex';
-        mapBlock.style.display='none';
-        otherCatBlock.style.display='none';
         reviewNbr.innerHTML=info.total;
         for (var i=0;i<info.reviews.length;i++){
             var txt='<div class="oneReview"><img class="resImg" src="'+info.reviews[i].user.image_url+'"/>';
-            txt+='<div class="resContent"><p>'+dispRating(info.reviews[i].rating)+'</p>';
+            txt+='<div class="revContent"><p>'+dispRating(info.reviews[i].rating)+'</p>';
             txt+='<p>'+info.reviews[i].text+needMore(info.reviews[i].text,info.reviews[i].url)+'</p><p>By '+info.reviews[i].user.name+' on ';
             txt+=friendlyDate(info.reviews[i].time_created)+'</p></div></div>';
             dispReview.insertAdjacentHTML('beforeend', txt);
         }
-        reviexTxtBtn.click();
+        reviewTxtBtn.click();
         
     }
     
-    function needMore(text,url){
-        console.log(text.slice(text.length-3,text.length))
-        if(text.slice(text.length-3,text.length)=='...'){
-            return ' <a href='+url+'>read more</a>';
-        }
-        else{
-            return '';
-        }
-    }
+   
     
-    function friendlyDate(date){
-        var months=['January','February', 'Mars', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'];
-        var txt=date.slice(8,10)+' '+months[Number(date.slice(5,7)-1)]+' '+date.slice(0,4)+' at'+date.slice(10,date.length);
-        
-        return txt;
-    }
+   
+  
     
-    function showMap(data){
-        console.log(data);
-    }
     
     function dispRating(rating){
         var txt="<div class='rating-container2'>";

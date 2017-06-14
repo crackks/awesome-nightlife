@@ -1,4 +1,6 @@
-
+html{
+	min-height: 100%;
+}
 
 .appName{
 	color:rgb(255,255,255);
@@ -72,10 +74,12 @@ form{
 	
 }
 .oneReview{
-	width:60%;
-	border-style:none;
-	box-shadow: inset 2px 10px 20px rgba(255,255,255,0.5), 0px 2px rgb(255,255,255);
+	width:600px;
+	border-top: none;
+	border-bottom: none;
+	box-shadow: inset 2px 10px 20px rgba(255,255,255,0.5), 0px -2px rgb(255,255,255),0px -3px rgb(240,240,240);
 	border-radius:0px;
+	border-width:2px;
 }
 .oneReview:hover{
 	background-color:rgb(255,255,255);
@@ -100,7 +104,7 @@ form{
 	border-color:rgb(240,240,240);
 	box-shadow:inset 200px 10px 20px rgba(255,255,255,0.5), 0px 0px 10px rgb(240,240,240);
 }
-.results,.more{
+.results,.more,.reviewBlock{
 	display:flex;
 	flex-direction:column;
 	justify-content:flex-start;
@@ -110,7 +114,7 @@ form{
 	margin-left:35%;
 	margin-bottom:5%;
 }
-.resContent{
+.resContent,.revContent{
 	width:80%;
 	display:flex;
 	flex-direction:column;
@@ -118,7 +122,8 @@ form{
 	align-self:flex-start;
 	margin-left:3%;
 }
-.resImg{
+
+.resImg,.revImg{
 	border-radius: 3px;
 	border-color:rgb(240,240,240);
 	border-style:solid;
@@ -126,10 +131,13 @@ form{
 	width:100px;
 	height: 100px;
 	box-shadow: 1px 1px 2px rgb(40,40,40);
-	
 	object-fit: cover;
 	-o-objrct-fit:cover;
 	overflow: hidden;
+}
+.revImg{
+	width:70px;
+	height: 70px;	
 }
 .lights{
 	width:100%;
@@ -149,24 +157,38 @@ form{
 
 .pageResult{	
 	width:660px;
-	margin-left:26.5%;
-	margin-top:-30px;
 	padding:10px;
 	display:flex;
-	flex-flow:column wrap;
+	flex-flow:column ;
 	justify-content:flex-start;
 	align-items:flex-start;
-	align-self:center;
-	background-color:rgb(200,200,200);
+	background-color:rgb(250,250,250);
 	border-style: solid;
 	border-color:rgb(240,240,240);
 	border-radius:3px;
 	box-shadow:inset 20px 10px 200px rgba(255,255,255,0.5);
+	margin-bottom:20px;
 }
+
 .dispRow{
 	margin-left:2.6%;
 	display:flex;
 	justify-content:center;
+	align-items:center;
+	align-self:flex-start;
+}
+
+.dispRow2{
+	display:flex;
+	justify-content:space-around;
+	align-items:flex-start;
+	align-self:flex-start;
+}
+
+.dispCol{
+	display:flex;
+	flex-direction:column;
+	justify-content:space-around;
 	align-items:center;
 	align-self:flex-start;
 }
@@ -209,22 +231,27 @@ form{
 	align-self:center;
 	
 }
-#name{
-	display:flex;
-	flex-flow:wrap;
+#Name{
+	display: flex;
 	width:150%;
 	margin-left:20%;
 	font-family: Lobster;
 	font-size:45px;
-	
 }
 .going-btn{
 	width:200px;
 }
+
+.going2-btn{
+	width:600px;
+	height: 150px;
+	margin:10px 0px 5px 15px;
+	font-size:30px;
+}
 a{
 	color:rgb(50,50,50);
 }
-.going-btn:hover,.submit-btn:hover,.btn-location:hover{
+.going-btn:hover,.submit-btn:hover,.btn-location:hover,.going2-btn:hover{
 	background:rgb(255,255,255);
 	border-color:rgb(192,192,192);
 	color:rgb(90,90,90);
@@ -240,9 +267,49 @@ a{
 }
 .rating-container2{
 	margin-top:-10px;
+	margin-bottom:10px;
 }
 
+.rating-container3{
+	margin-bottom: -5px;
+}
 .dispReviews{
 	display:flex;
 	flex-direction:column;
 }
+
+.reviewStart,.reviewEnd{
+	width:600px;
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	align-items:center;
+	background-color:rgb(200,200,200);
+	border-style:solid;
+	border-color:rgb(240,240,240);
+	border-width:2px;
+	
+}
+.reviewStart{
+	margin-top:10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom:none;
+}
+.reviewEnd{
+	height:20px;
+	margin-bottom:30px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-shadow: inset 2px 10px 20px rgba(255,255,255,0.5), 0px -2px rgb(255,255,255), 0px -3px rgb(240,240,240);
+	border-top:none;
+}
+
+
+#map {
+	border-color:rgb(255,255,255);
+	border-style:solid;
+	border-radius:3px;
+    height: 300px;
+    width: 100%;
+   }

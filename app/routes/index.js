@@ -19,7 +19,7 @@ module.exports = function (app, passport) {
 	var user= new User();
 	app.route('/')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/myindex.html');
+			res.render('myindex');
 		});
 
 
@@ -33,7 +33,7 @@ module.exports = function (app, passport) {
 		.get(search.checkLocation);
 		
 	app.route('/results?:q')	
-		.get(search.redirectTo);
+		.get(search.checkError);
 		
 	app.route('/res/:city')
 		.get(function(req,res) {
@@ -73,6 +73,8 @@ module.exports = function (app, passport) {
 	app.route('/test/:lat/:lng')
 		.get(search.showMap);
 		
+		
+	
 	app.route('/isGoingTo/:city/:layer/:id/log?:q')
 		.post(function(req, res, next) {
 			  passport.authenticate('local', function(err, user, info) {

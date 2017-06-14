@@ -5,6 +5,7 @@
     var result=document.querySelector('.results');
     var moreBtn=document.querySelector('.getMore-btn')
     var more=document.querySelector('.more');
+    var redirect=document.querySelector('#redirect');
     var apiUrl=window.location.href+'/getInfo';
     var count=0;
     
@@ -17,6 +18,12 @@
     }
     
     function showInfo(data){
+        console.log(data);
+        var info=JSON.parse(data);
+        if (info=="error"){
+            redirect.click();
+        }
+        else{
         var info=JSON.parse(data);
         var business=info.businesses;
         console.log(business[0])
@@ -35,7 +42,7 @@
         }
         else{
             more.style.display='none';
-        }
+        }}
     }
     
     moreBtn.addEventListener('click',function(){

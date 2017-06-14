@@ -13,11 +13,10 @@ function Search(){
         });
         
     const publicConfig = {
-          key: 'AIzaSyAcqqN3QEuhMQelg3pG4jHWXE1efNEdcCQ',
+          key: 'AIzaSyDxlnjOoQ3MxbYjhj6lOantzO-WcnPPn6A',
           stagger_time:       1000, 
           encode_polylines:   false,
-          secure:             true, 
-          proxy:              'http://127.0.0.1:9999'
+          secure:             true
         };
    
     
@@ -25,18 +24,28 @@ function Search(){
     this.callApiByCityName=function(req,res){
         var city=req.params.city;
         yelp.searchBusiness({ location: city ,categorie:'Nightlife',limit:10}).then(function(result){
-            if(!result){
-                console.log('error');
-            }
-            console.log(result);
             if(req.user){
                sendJson(result,req.user.userName,res);
             }
             else{
                 sendJson(result,null,res);
            }
-        });
+        })
+        
     };
+    
+    this.checkError=function(req,res){
+         var city=req.query.city;
+        yelp.searchBusiness({ location: city ,categorie:'Nightlife',limit:10}).then(function(result){
+            res.redirect('/res/'+city);
+           
+        })
+        .catch(function(e){
+            req.flash('error_msg',JSON.parse(e.data).error.description.toString());
+            res.redirect('/');
+        } );
+    }
+    
     
     this.getMore=function(req,res){
         var city=req.params.city;
@@ -51,9 +60,6 @@ function Search(){
         });
     };
     
-    this.redirectTo=function(req,res){
-        res.redirect('/res/'+req.query.city);
-    };    
     
     this.callApiById=function(req,res){
         var id=req.params.id;
@@ -81,16 +87,13 @@ function Search(){
     
     
     this.reviews=function(req,res){
-        yelp.getReviews(req.params.id, { locale: req.params.lang }).then((results) => console.log(results)&res.json(results));
+        yelp.getReviews(removeAccents(req.params.id), { locale: req.params.lang }).then((results) => res.json(results));
     }
     
     this.showMap=function(req,res){
         var lat=req.params.lat;
         var lng=req.params.lng;
         var gmAPI = new GoogleMapsAPI(publicConfig);
-        console.log(gmAPI)
-        console.log(lat);
-        console.log(lng);
         var latlng=lat+","+lng;
         var reverseGeocodeParams = {
           "latlng":        latlng,
@@ -100,48 +103,50 @@ function Search(){
         };
          
         
-var params = {
-  center: '444 W Main St Lock Haven PA',
-  zoom: 15,
-  size: '500x400',
-  maptype: 'roadmap',
-  markers: [
-    {
-      location: '300 W Main St Lock Haven, PA',
-      label   : 'A',
-      color   : 'green',
-      shadow  : true
-    },
-    {
-      location: '444 W Main St Lock Haven, PA',
-      icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe%7C996600'
-    }
-  ],
-  style: [
-    {
-      feature: 'road',
-      element: 'all',
-      rules: {
-        hue: '0x00ff00'
-      }
-    }
-  ],
-  path: [
-    {
-      color: '0x0000ff',
-      weight: '5',
-      points: [
-        '41.139817,-77.454439',
-        '41.138621,-77.451596'
-      ]
-    }
-  ]
-};
+        var params = {
+          center: '444 W Main St Lock Haven PA',
+          zoom: 15,
+          size: '500x400',
+          maptype: 'roadmap',
+          markers: [
+            {
+              location: '300 W Main St Lock Haven, PA',
+              label   : 'A',
+              color   : 'green',
+              shadow  : true
+            },
+            {
+              location: '444 W Main St Lock Haven, PA',
+              icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe%7C996600'
+            }
+          ],
+          style: [
+            {
+              feature: 'road',
+              element: 'all',
+              rules: {
+                hue: '0x00ff00'
+              }
+            }
+          ],
+          path: [
+            {
+              color: '0x0000ff',
+              weight: '5',
+              points: [
+                '41.139817,-77.454439',
+                '41.138621,-77.451596'
+              ]
+            }
+          ]
+        };
 
-gmAPI.staticMap(params, function(err, binaryImage) {
-  // fetch asynchronously the binary image 
-  console.log(binaryImage)
-});
+        gmAPI.staticMap(params, function(err, binaryImage) {
+        if(err){console.log(err);
+            console.log('oups');
+        };
+          res.json(binaryImage);
+        });
     };
     
     this.isGoing=function(req,res){
