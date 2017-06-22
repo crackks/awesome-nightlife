@@ -12,11 +12,11 @@
     body.style.background=background;
     body.style['background-size']= 'cover';
     body.style.width='100%';
-    body.style.height='850px';
+    body.style.height='750px';
     
     var icon=document.querySelector('.icon-location');
     var redirect=document.querySelector("#redirect");
-    
+    var noLoc=document.querySelector('.noLocation')
     icon.addEventListener('click',function(){
         if (window.navigator.geolocation) {
             window.navigator.geolocation.getCurrentPosition(function(position){
@@ -25,7 +25,10 @@
                 var apiUrl=window.location.origin+'/location/'+lat+'/'+long;
                 ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, showInfo));
             });
-        } 
+        }
+        else{
+            noLoc.style.display='block';
+        }
         
     });
     

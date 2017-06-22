@@ -14,19 +14,35 @@
 
 	<body style='background:rgb(30,30,50)'>
 	    <a href='/' style='text-decoration:none'><h1 class='text-center appName'>Awesome Night Life</h1></a>
-	    <div class='filters'>
-	    	<p>Select :</p>
-	    	<button class='btn rating'>Rating</button>
-	    	<button class='btn categories'>Categories</button>
-	    </div>
+	    
+    	<form  class='filters'>
+	    	
+	    	<select  name='categories' class='rating categories'>
+	    		<option selected>Categories</option>
+	    		<option value='restaurants'>Restaurant</option>
+	    		<option value='bars'>Bar </option>
+	    		<option value='parks'>Park</option>
+	    		<option value='nightclubs'>Night Club</option>
+	    	</select>
+	    	<select  name='price' class='rating price'>
+	    		<option selected>Price</option>
+	    		<option value='4'>€€€€</option>
+	    		<option value='3'>€€€</option>
+	    		<option value='2'>€€</option>
+	    		<option value='1'>€</option>
+	    	</select>
+	    	<input type='text' name='inputCity' class='inputCity'/>
+	    	<input type='button' class="btn btn-search" value="&#xF002; Search"/>
+    	</form>
+	    
 		<div class="results"></div>
 		<div class='more'style='display:none'>
 			<button class='btn getMore-btn'>Get More!</button>
 		</div>
 		<a id='redirect' href='/' style='display:none'></a>
 		
-		<script type="text/javascript" src="../../common/ajax-functions.js"></script>
-		<script type='text/javascript' src='../../controllers/resultsController.client.js'></script>
+		<script type="text/javascript" src="../../../common/ajax-functions.js"></script>
+		<script type='text/javascript' src='../../../controllers/resultsController.client.js'></script>
 	</body>
 
 </html>

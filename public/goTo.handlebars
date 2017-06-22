@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Awesome Night Life - Search</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+		<link href="../../../../public/css/login.css" rel="stylesheet" type="text/css">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	
+
+	<body style='background:rgb(30,30,50)'>
+	    <a href='/' style='text-decoration:none'><h1 class='text-center appName2'>Awesome Night Life</h1></a>
+	    {{#if success_msg2}}
+				<div class="alert alert-success text-center">{{success_msg2}}</div>
+		{{/if}}
+	    <div class='dispRow2'>
+				<div class='pageResult'>
+				    <div class='dispRow'>
+				        <h2><span id='Name' ></span></h2>
+				        <img class='logo-yelp' src='/public/img/Yelp_logo.png'/>
+				    </div>
+				    <div class='dispRow' style='margin-top:20px'>
+					    <div id='rating'></div>
+				    </div>
+				    <div class='dispRow'>
+				    	
+				    	<p><span id='review'></span> reviews</p>
+					    <p class='separator'> | </p>
+					    <p><i class="fa fa-phone fa-lg" aria-hidden="true"></i> <span id='phoneNbr'></span></p>
+					    <p class='separator'> | </p>
+			            <p><i class="fa fa-laptop fa-lg" aria-hidden="true"></i> <a id='webSite' target="_blank">Go to Website</a></p>
+			            <p id="price"></p>
+				    </div>
+				    <div class='dispRow'>
+				    	<div id='categorie'></div>
+				    	<p class='separator'> | </p>
+				    	<p><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> <span id='address'></span></p>
+				    </div>
+				    <div class=' imageDisp'>
+				    	<div class='col-xs-8'>
+					    	<a id='img1Link' target="_blank"><img class='imageL'id="image"/></a>
+					    </div>
+					    <div class='col-xs-4'>
+						    <a id='img2Link' target="_blank"><img class='imageS'id="image2"/></a>
+						    <a id='img3Link'target="_blank"><img class='imageS'id="image3"/></a>
+					    </div>
+				    </div>
+				    <button class='going2-btn btn'>
+						<span id='nbrGoing'></span> Going
+					</button>
+				</div>
+				
+			
+			<div class='dispCol'>
+				<div class='dispMap' id='map'></div>
+				<div class='reviewBlock' id='dispReviews' >
+					<div class="reviewStart"><h2 style='font-family:Lobster; font-size:30px'>Reviews</h2><p><span id='reviewNbr'></span></p></div>
+					<div class='dispReviews'></div>
+					<div class='reviewEnd'></div>
+				</div>
+			</div>
+		</div>
+		<div class=box id='lgn-form'style='display:none'>
+			<div ='btn-container'>
+				<button class='text-center btn loginBtn'>Login</button>
+				<button class='text-center btn signUpBtn'>Register</button>	
+			
+			<div class='form-container'>
+				<form action='log' class='loginBlock' method='post'style="display:none">
+					<input type='text' name='username' required="required" placeholder="User Name" class='logUserName'>
+					<input type='password' name='password' requied='requied' placeholder='Password 'class='logPassUser'>
+					<input type='submit' value='submit'class='logSubmitBtn'>
+				</form>
+				
+				
+			
+				<form action='sign' class='signUpBlock' method='post' >
+					<input type='email' name='mail' required="required" placeholder="E-mail adress" class='logUserName'>
+					<input type='text' name='userName' required="required" placeholder="User Name" class='logUserName'>
+					<input type='password' name='ps' requied='required' placeholder='Password 'class='logPassUser'>
+					<input type='password' name='Cps' requied='required' placeholder='Confirm Password 'class='logPassUser'>
+					<input type='submit' value='submit'class='logSubmitBtn'>
+				</form>
+			</div>
+		</div>
+			{{#if success_msg}}
+				<div class="alert alert-success text-center">{{success_msg}}</div>
+			{{/if}}
+			{{#if error}}
+				{{#each error}}
+					<div class="alert alert-danger text-center ">{{msg}}</div>
+				{{/each}}
+			{{/if}}
+			
+			
+			
+			{{#if error_msg}}
+				<div class="alert alert-danger text-center">{{error_msg}}</div>
+			{{/if}}
+			
+		<div class='otherCat'></div>
+		<a href='#lgn-form' id="lgn"></a>
+		
+		<script id='Scri'></script>
+		<script type="text/javascript" src="/common/ajax-functions.js"></script>
+		<script type='text/javascript' src='/controllers/goToController.client.js'></script>
+		<script type="text/javascript" src="../../../../controllers/loginController.client.js"></script>
+		
+	</body>
+
+</html>

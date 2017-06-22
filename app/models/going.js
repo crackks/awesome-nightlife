@@ -4,8 +4,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Going = new Schema({
-    cityId:String,
-    peopleGoing:Number
+    id:String,
+    peopleGoing:Number,
+    nbrGoing:String
 
 },{ versionKey: false });
 

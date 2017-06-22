@@ -16,7 +16,15 @@ function User(){
         var errors=req.validationErrors();
         
         if (errors){
-            res.render('myLogin',{errors:errors});
+            req.flash('error',errors);
+            console.log(errors)
+            if (req.params.layer==1){
+                res.redirect('/goTo/'+direction+'/reg');
+            }
+            else{
+                res.redirect();
+            }
+            
         }
         else{
             var hps="";
@@ -41,19 +49,33 @@ function User(){
                                     newUser.save(function(err,data){
                                         if (err){throw err}
                                         req.flash('success_msg','You are registered! You can now login.');
-                                        res.redirect('/isGoingTo/'+direction+'/login');
-                                        
+                                        if (req.params.layer==1){
+                                            res.redirect('/goTo/'+direction+'/reg');
+                                        }
+                                        else{
+                                            res.redirect();
+                                        }
                                     });
                                 }
                                 else{
                                     req.flash('error_msg','This email adress is already use');
-                                    res.redirect('/isGoingTo/'+direction+'/login');
+                                    if (req.params.layer==1){
+                                        res.redirect('/goTo/'+direction+'/reg');
+                                    }
+                                    else{
+                                        res.redirect();
+                                    }
                                 }
                             });
                         }
                         else{
                             req.flash('error_msg','This user name is already use');
-                            res.redirect('/isGoingTo/'+direction+'/login');
+                            if (req.params.layer==1){
+                                res.redirect('/goTo/'+direction+'/reg');
+                            }
+                            else{
+                                res.redirect();
+                            }
                         }
                     });
                     

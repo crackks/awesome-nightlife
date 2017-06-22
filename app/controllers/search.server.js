@@ -4,7 +4,6 @@ const Yelp = require('node-yelp-api-v3');
 var removeAccents=require("remove-accents");
 var Going= require('../models/going.js');
 var Users = require('../models/users.js');
-var GoogleMapsAPI=require('googlemaps');
 function Search(){
     
     const yelp = new Yelp({
@@ -12,12 +11,7 @@ function Search(){
           consumer_secret: 't3M1TgZJWs97kDI1a6DKW0M28cuDJaCe8Ut5p4SyoU52RMjImlLLQ8ICrHdIHR62'
         });
         
-    const publicConfig = {
-          key: 'AIzaSyDxlnjOoQ3MxbYjhj6lOantzO-WcnPPn6A',
-          stagger_time:       1000, 
-          encode_polylines:   false,
-          secure:             true
-        };
+    
    
     
 
@@ -35,7 +29,7 @@ function Search(){
     };
     
     this.checkError=function(req,res){
-         var city=req.query.city;
+        var city=req.query.city;
         yelp.searchBusiness({ location: city ,categorie:'Nightlife',limit:10}).then(function(result){
             res.redirect('/res/'+city);
            
@@ -90,118 +84,41 @@ function Search(){
         yelp.getReviews(removeAccents(req.params.id), { locale: req.params.lang }).then((results) => res.json(results));
     }
     
-    this.showMap=function(req,res){
-        var lat=req.params.lat;
-        var lng=req.params.lng;
-        var gmAPI = new GoogleMapsAPI(publicConfig);
-        var latlng=lat+","+lng;
-        var reverseGeocodeParams = {
-          "latlng":        latlng,
-          "result_type":   "postal_code",
-          "language":      "en",
-          "location_type": "APPROXIMATE"
-        };
-         
-        
-        var params = {
-          center: '444 W Main St Lock Haven PA',
-          zoom: 15,
-          size: '500x400',
-          maptype: 'roadmap',
-          markers: [
-            {
-              location: '300 W Main St Lock Haven, PA',
-              label   : 'A',
-              color   : 'green',
-              shadow  : true
-            },
-            {
-              location: '444 W Main St Lock Haven, PA',
-              icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=cafe%7C996600'
-            }
-          ],
-          style: [
-            {
-              feature: 'road',
-              element: 'all',
-              rules: {
-                hue: '0x00ff00'
-              }
-            }
-          ],
-          path: [
-            {
-              color: '0x0000ff',
-              weight: '5',
-              points: [
-                '41.139817,-77.454439',
-                '41.138621,-77.451596'
-              ]
-            }
-          ]
-        };
-
-        gmAPI.staticMap(params, function(err, binaryImage) {
-        if(err){console.log(err);
-            console.log('oups');
-        };
-          res.json(binaryImage);
-        });
-    };
+    
     
     this.isGoing=function(req,res){
         var cityId=req.params.id;
-        var city=req.params.city;
-        var layer=req.params.layer;
         Users.findOne({'userName':req.user.userName,'isGoingTo':cityId}).exec(function(err,user){
             if (err) throw err;
             if (user){
-                Going.findOneAndUpdate({cityId:cityId},{$inc:{peopleGoing:-1}}).exec(function(err,data){
+                Going.findOneAndUpdate({id:cityId},{$inc:{peopleGoing:-1}}).exec(function(err,data){
                     if (err) throw err;
                     user.update({$pull:{'isGoingTo':cityId}}).exec(function(err,updateUser){
                         if (err)throw err;
-                        console.log('1 less');
-                        if (layer==0){
-                            res.redirect('/res/'+city);
-                            
-                        }
-                        else{
-                            res.redirect('/goTo/'+city+'/'+cityId);
-                        }
+                        console.log('1 less')
+                        sendOneJson(data,req.user.userName,res)
                     });
                 });
             }
             else{
                 console.log('not found');
-                Users.findOneAndUpdate({'userName':req.user.userName},{$push :{'isGoingTo':cityId}}).exec(function(err,data){
+                Users.findOneAndUpdate({'userName':req.user.userName},{$push :{'isGoingTo':cityId}}).exec(function(err,user){
                     if (err)throw err;
-                    Going.findOne({cityId:cityId}).exec(function(err,data){
+                    Going.findOne({id:cityId}).exec(function(err,data){
                         if (err)throw err;
                         if(data){
-                            data.update({$inc:{peopleGoing:1}}).exec(function(err,resp){
+                            data.update({$inc:{peopleGoing:1}}).exec(function(err,newdata){
                                 if (err)throw err;
                                 console.log('1 more');
-                                if (layer==0){
-                                    res.redirect('/res/'+city);
-                                    
-                                }
-                                else{
-                                    res.redirect('/goTo/'+city+'/'+cityId);
-                                }
-                                    });
+                                sendOneJson(data,req.user.userName,res)
+                            });
                         }
                         else{
-                            var going=new Going( {cityId:cityId,peopleGoing:1});
+                            var going=new Going( {id:cityId,peopleGoing:1});
                             going.save(function(err,go){
                                 if (err)throw err;
                                 console.log('1 new');
-                                if (layer==0){
-                                    res.redirect('/res/'+city);
-                                    
-                                }
-                                else{
-                                    res.redirect('/goTo/'+city+'/'+cityId);
-                                }
+                                sendOneJson(go,req.user.userName,res)
                             });
                         }
                         
@@ -213,7 +130,43 @@ function Search(){
         
     };
     
+    this.filter=function(req,res){
+        var city=req.params.city;
+        var price=req.params.price;
+        var cat=req.params.categorie;
+        var count=req.params.count;
+        console.log(city+' '+price+' '+cat);
+        var search={location:city,limit:10,offset:count*10};
+        if (price!='Price'){
+            search.price=price;
+        }
+        if (cat!='Categories'){
+            search.term=cat;
+        }
+        yelp.searchBusiness(search).then(function(result){
+            if(req.user){
+               sendJson(result,req.user.userName,res);
+            }
+            else{
+                sendJson(result,null,res);
+           }
+        })
+        .catch((e)=> console.log(e)&res.json({error:'no result'}));
+    };
     
+    this.catSearch=function(req,res){
+        var city=req.params.city;
+        var cat=req.params.categorie;
+        yelp.searchBusiness({location:city,limit:10,categorie:cat}).then(function(result){
+            if(req.user){
+               sendJson(result,req.user.userName,res);
+            }
+            else{
+                sendJson(result,null,res);
+           }
+        });
+        
+    }
     
     function sendJson(data,userName,res){
         Going.find().exec(function(err,going){
@@ -260,7 +213,7 @@ function Search(){
     
     
     function sendOneJson(data,userName,res){
-        Going.findOne({cityId:data.id}).exec(function(err,going){
+        Going.findOne({id:data.id}).exec(function(err,going){
                     if (err)throw err;
                     if(going){
                         var nbrGoing=going.peopleGoing;
@@ -272,7 +225,7 @@ function Search(){
                                     data.nbrGoing='You';
                                     }
                                     else{
-                                        data.nbrGoing='You and' + Number(nbrGoing-1)+' person';
+                                        data.nbrGoing='You and ' + Number(nbrGoing-1)+' person';
                                     }
                                     res.json(data);
                                 }
@@ -284,8 +237,7 @@ function Search(){
                             });
                         }
                         else{
-                                data.nbrGoing=nbrGoing+' person';
-                            
+                            data.nbrGoing=nbrGoing+' person';
                             res.json(data);
                         }
                     }
@@ -309,8 +261,8 @@ function Search(){
     
     function personGoing(going,Id){
         for (var i=0; i<going.length;i++){
-            if (going[i].cityId==Id){
-                if (going[i].peopleGoing&&going[i].peopleGoing<1){
+            if (removeAccents(going[i].id)==removeAccents(Id)){
+                if (going[i].peopleGoing&&going[i].peopleGoing<=1){
                     return going[i].peopleGoing;
                 }
                 else {return 0}
