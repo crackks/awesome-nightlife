@@ -366,7 +366,10 @@ input[name='inputCity']{
 	border-radius:3px;
 	border-style:solid;
 	border-width:1px;
+	width:40%;
 	border-color:rgb(220,220,220);
+	background-color:rgb(255,255,255);
+	color:rgb(50,50,50);
 	box-shadow: 0px 0px 1px rgb(0,0,0);
 }
 

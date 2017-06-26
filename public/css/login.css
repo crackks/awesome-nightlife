@@ -1,3 +1,13 @@
+.popup{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    opacity: 1;
+}
 
 
 .box{
@@ -8,13 +18,13 @@
     border-style:solid;
     width:40%;
     margin-left:30%;
-    margin-top:5%;
+    margin-top:15%;
     margin-bottom:5%;
     box-shadow: inset 0px 0px 20px rgb(10,150,250), 0px 0px 2px rgb(0,0,0);
     font-size:20px;
     padding:30px;
-    z-index: 4;
-    
+    position: relative;
+
 }
 
 .btn-container{
@@ -113,7 +123,7 @@ input[type=text],input[type=password],input[type=email]{
     align-items:center;
 }
 
-.logSubmitBtn{
+.logSubmitBtn, .quitBtn1,.quitBtn0{
     margin-bottom: 10px;
     width:80%;
     border-style:solid;
@@ -123,9 +133,14 @@ input[type=text],input[type=password],input[type=email]{
     border-color:rgb(255,255,255);
     font-size:15px;
 }
+.quitBtn1,.quitBtn0{
+    background-color:rgb(250,150,150);
+}
 
+.quitBtn1:hover,.quitBtn0:hover{
+    background-color:rgb(250,100,100);
+}
 .logSubmitBtn:hover{
-    background-color:rgb(220,220,220);
     background-color:rgb(100,250,100);
 }
 

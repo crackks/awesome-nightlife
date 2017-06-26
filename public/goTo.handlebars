@@ -65,44 +65,49 @@
 				</div>
 			</div>
 		</div>
-		<div class=box id='lgn-form'style='display:none'>
-			<div ='btn-container'>
-				<button class='text-center btn loginBtn'>Login</button>
-				<button class='text-center btn signUpBtn'>Register</button>	
+		<div class='popup' style='display:none'>
+			<div class=box id='lgn-form'>
+				<div ='btn-container'>
+					<button class='text-center btn loginBtn'>Login</button>
+					<button class='text-center btn signUpBtn'>Register</button>	
+				</div>
+				<div class='form-container'>
+					<form action='log' class='loginBlock' method='post'style="display:none">
+						<input type='text' name='username' required="required" placeholder="User Name" class='logUserName'>
+						<input type='password' name='password' requied='requied' placeholder='Password 'class='logPassUser'>
+						<input type='submit' value='Submit'class='logSubmitBtn'>
+						<input type='button' value='Quit' class='quitBtn0'>
+					</form>
+					
+					
+				
+					<form action='sign' class='signUpBlock' method='post' >
+						<input type='email' name='mail' required="required" placeholder="E-mail adress" class='logUserName'>
+						<input type='text' name='userName' required="required" placeholder="User Name" class='logUserName'>
+						<input type='password' name='ps' requied='required' placeholder='Password 'class='logPassUser'>
+						<input type='password' name='Cps' requied='required' placeholder='Confirm Password 'class='logPassUser'>
+						<input type='submit' value='Submit'class='logSubmitBtn'>
+						<input type='button' value='Quit' class='quitBtn1'>
+					</form>
+				</div>
 			
-			<div class='form-container'>
-				<form action='log' class='loginBlock' method='post'style="display:none">
-					<input type='text' name='username' required="required" placeholder="User Name" class='logUserName'>
-					<input type='password' name='password' requied='requied' placeholder='Password 'class='logPassUser'>
-					<input type='submit' value='submit'class='logSubmitBtn'>
-				</form>
+				{{#if success_msg}}
+					<div class="alert alert-success text-center">{{success_msg}}</div>
+				{{/if}}
+				{{#if error}}
+					{{#each error}}
+						<div class="alert alert-danger text-center ">{{msg}}</div>
+					{{/each}}
+				{{/if}}
 				
 				
-			
-				<form action='sign' class='signUpBlock' method='post' >
-					<input type='email' name='mail' required="required" placeholder="E-mail adress" class='logUserName'>
-					<input type='text' name='userName' required="required" placeholder="User Name" class='logUserName'>
-					<input type='password' name='ps' requied='required' placeholder='Password 'class='logPassUser'>
-					<input type='password' name='Cps' requied='required' placeholder='Confirm Password 'class='logPassUser'>
-					<input type='submit' value='submit'class='logSubmitBtn'>
-				</form>
+				
+				{{#if error_msg}}
+					<div class="alert alert-danger text-center">{{error_msg}}</div>
+				{{/if}}
+				
 			</div>
 		</div>
-			{{#if success_msg}}
-				<div class="alert alert-success text-center">{{success_msg}}</div>
-			{{/if}}
-			{{#if error}}
-				{{#each error}}
-					<div class="alert alert-danger text-center ">{{msg}}</div>
-				{{/each}}
-			{{/if}}
-			
-			
-			
-			{{#if error_msg}}
-				<div class="alert alert-danger text-center">{{error_msg}}</div>
-			{{/if}}
-			
 		<div class='otherCat'></div>
 		<a href='#lgn-form' id="lgn"></a>
 		

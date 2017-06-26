@@ -7,11 +7,9 @@ var Users = require('../models/users.js');
 function Search(){
     
     const yelp = new Yelp({
-          consumer_key: '4ZOfZXBV3Q9HQYrvGxnFcg',
-          consumer_secret: 't3M1TgZJWs97kDI1a6DKW0M28cuDJaCe8Ut5p4SyoU52RMjImlLLQ8ICrHdIHR62'
+          consumer_key: process.env.Yelp_apiKey,
+          consumer_secret: process.env.Yelp_apiSecret
         });
-        
-    
    
     
 
@@ -24,7 +22,7 @@ function Search(){
             else{
                 sendJson(result,null,res);
            }
-        })
+        });
         
     };
     
@@ -38,7 +36,7 @@ function Search(){
             req.flash('error_msg',JSON.parse(e.data).error.description.toString());
             res.redirect('/');
         } );
-    }
+    };
     
     
     this.getMore=function(req,res){
@@ -82,7 +80,7 @@ function Search(){
     
     this.reviews=function(req,res){
         yelp.getReviews(removeAccents(req.params.id), { locale: req.params.lang }).then((results) => res.json(results));
-    }
+    };
     
     
     
@@ -95,13 +93,11 @@ function Search(){
                     if (err) throw err;
                     user.update({$pull:{'isGoingTo':cityId}}).exec(function(err,updateUser){
                         if (err)throw err;
-                        console.log('1 less')
-                        sendOneJson(data,req.user.userName,res)
+                        sendOneJson(data,req.user.userName,res);
                     });
                 });
             }
             else{
-                console.log('not found');
                 Users.findOneAndUpdate({'userName':req.user.userName},{$push :{'isGoingTo':cityId}}).exec(function(err,user){
                     if (err)throw err;
                     Going.findOne({id:cityId}).exec(function(err,data){
@@ -109,16 +105,14 @@ function Search(){
                         if(data){
                             data.update({$inc:{peopleGoing:1}}).exec(function(err,newdata){
                                 if (err)throw err;
-                                console.log('1 more');
-                                sendOneJson(data,req.user.userName,res)
+                                sendOneJson(data,req.user.userName,res);
                             });
                         }
                         else{
                             var going=new Going( {id:cityId,peopleGoing:1});
                             going.save(function(err,go){
                                 if (err)throw err;
-                                console.log('1 new');
-                                sendOneJson(go,req.user.userName,res)
+                                sendOneJson(go,req.user.userName,res);
                             });
                         }
                         
@@ -135,7 +129,6 @@ function Search(){
         var price=req.params.price;
         var cat=req.params.categorie;
         var count=req.params.count;
-        console.log(city+' '+price+' '+cat);
         var search={location:city,limit:10,offset:count*10};
         if (price!='Price'){
             search.price=price;
@@ -165,8 +158,7 @@ function Search(){
                 sendJson(result,null,res);
            }
         });
-        
-    }
+    };
     
     function sendJson(data,userName,res){
         Going.find().exec(function(err,going){

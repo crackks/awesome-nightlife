@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Awesome Night Life - Search</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Palanquin+Dark|Lobster" rel="stylesheet">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+		<link href="../../../public/css/login.css" rel="stylesheet" type="text/css">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	
+
+	<body style='background:rgb(30,30,50)'>
+		<a href='#lgn-form' id="lgn"></a>
+	    <a href='/' style='text-decoration:none'><h1 class='text-center appName'>Awesome Night Life</h1></a>
+	    {{#if success_msg2}}
+				<div class="alert alert-success text-center">{{success_msg2}}</div>
+		{{/if}}
+		<div class='popup' style='display:none'>
+		    <div class=box id='lgn-form'>
+				<div ='btn-container'>
+					<button class='text-center btn loginBtn'>Login</button>
+					<button class='text-center btn signUpBtn'>Register</button>	
+				</div>
+				<div class='form-container'>
+					<form action='log' class='loginBlock' method='post'style="display:none">
+						<input type='text' name='username' required="required" placeholder="User Name" class='logUserName'>
+						<input type='password' name='password' requied='requied' placeholder='Password 'class='logPassUser'>
+						<input type='submit' value='Submit'class='logSubmitBtn'>
+						<input type='button' value='Quit' class='quitBtn0'>
+					</form>
+					
+					
+				
+					<form action='sign' class='signUpBlock' method='post' >
+						<input type='email' name='mail' required="required" placeholder="E-mail adress" class='logUserName'>
+						<input type='text' name='userName' required="required" placeholder="User Name" class='logUserName'>
+						<input type='password' name='ps' requied='required' placeholder='Password 'class='logPassUser'>
+						<input type='password' name='Cps' requied='required' placeholder='Confirm Password 'class='logPassUser'>
+						<input type='submit' value='Submit'class='logSubmitBtn'>
+						<input type='button' value='Quit' class='quitBtn1'>
+					</form>
+				</div>
+				
+		
+			{{#if success_msg}}
+				<div class="alert alert-success text-center">{{success_msg}}</div>
+			{{/if}}
+			{{#if error}}
+				{{#each error}}
+					<div class="alert alert-danger text-center ">{{msg}}</div>
+				{{/each}}
+			{{/if}}
+			
+			
+			
+			{{#if error_msg}}
+				<div class="alert alert-danger text-center">{{error_msg}}</div>
+			{{/if}}
+			</div>
+		</div>
+    	<form  class='filters'>
+	    	
+	    	<select  name='categories' class='rating categories'>
+	    		<option selected>Categories</option>
+	    		<option value='restaurants'>Restaurant</option>
+	    		<option value='bars'>Bar </option>
+	    		<option value='parks'>Park</option>
+	    		<option value='nightclubs'>Night Club</option>
+	    	</select>
+	    	<select  name='price' class='rating price'>
+	    		<option selected>Price</option>
+	    		<option value='4'>€€€€</option>
+	    		<option value='3'>€€€</option>
+	    		<option value='2'>€€</option>
+	    		<option value='1'>€</option>
+	    	</select>
+	    	<input type='text' name='inputCity' class='inputCity'/>
+	    	<input type='button' class="btn btn-search" value=" &#xF002; Search"/>
+    	</form>
+	    
+		<div class="results"></div>
+		<div class='more'style='display:none'>
+			<button class='btn getMore-btn'>Get More!</button>
+		</div>
+		<a id='redirect' href='/' style='display:none'></a>
+		
+		<script type="text/javascript" src="../../../common/ajax-functions.js"></script>
+		<script type='text/javascript' src='../../../controllers/resultsController.client.js'></script>
+		<script type="text/javascript" src="../../../../controllers/loginController.client.js"></script>
+	</body>
+
+</html>

@@ -17,12 +17,11 @@ function User(){
         
         if (errors){
             req.flash('error',errors);
-            console.log(errors)
             if (req.params.layer==1){
                 res.redirect('/goTo/'+direction+'/reg');
             }
             else{
-                res.redirect();
+                res.redirect('/res/'+req.params.city+'/reg');
             }
             
         }
@@ -53,7 +52,7 @@ function User(){
                                             res.redirect('/goTo/'+direction+'/reg');
                                         }
                                         else{
-                                            res.redirect();
+                                            res.redirect('/res/'+req.params.city+'/reg');
                                         }
                                     });
                                 }
@@ -63,7 +62,7 @@ function User(){
                                         res.redirect('/goTo/'+direction+'/reg');
                                     }
                                     else{
-                                        res.redirect();
+                                        res.redirect('/res/'+req.params.city+'/reg');
                                     }
                                 }
                             });
@@ -74,7 +73,7 @@ function User(){
                                 res.redirect('/goTo/'+direction+'/reg');
                             }
                             else{
-                                res.redirect();
+                                res.redirect('/res/'+req.params.city+'/reg');
                             }
                         }
                     });

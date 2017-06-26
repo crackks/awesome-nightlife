@@ -37,9 +37,11 @@
     var id='';
     var clicked=[false,false];
     var city="";
-    var login=document.querySelector('.box');
+    var login=document.querySelector('.popup');
     var reg=false;
     var loginBtn=document.querySelector('.loginBtn');
+    var quitLog0=document.querySelector('.quitBtn0');
+    var quitLog1=document.querySelector('.quitBtn1');
     
 	function showInfo(data){
         var info=JSON.parse(data);
@@ -74,10 +76,9 @@
             arrQ[k]=document.querySelector('#cat'+k);
             
         }
-        arrQ[0].addEventListener('click',function(){dispCat(0);});
-        if(arrQ[1]){
-            arrQ[1].addEventListener('click',function(){dispCat(1);});  
-        }
+        arrQ.forEach(function(elem,ind){
+            elem.addEventListener('click',function(){dispCat(ind);});
+        });
         phoneNbr.innerHTML=info.display_phone;
         
         for (var j=0;j<info.location.display_address.length;j++){
@@ -136,7 +137,12 @@
         loginBtn.click();
     }
         
-    
+    quitLog0.addEventListener('click',function(){
+        login.style.display='none';
+    });
+    quitLog1.addEventListener('click',function(){
+        login.style.display='none';
+    });
     
         ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, showInfo));
     
@@ -148,7 +154,6 @@
     
     function showReviews(data){
         var info=JSON.parse(data);
-        console.log(info)
         reviewNbr.innerHTML=info.reviews.length+' out of '+info.total;
         for (var i=0;i<info.reviews.length;i++){
             var txt='<div class="oneReview"><img class="revImg" src="'+isImg(info.reviews[i].user.image_url)+'"/>';
@@ -157,8 +162,6 @@
             txt+=friendlyDate(info.reviews[i].time_created)+'</p></div></div>';
             dispReview.insertAdjacentHTML('beforeend', txt);
         }
-        
-        
     }
     
     function isImg(imgUrl){
@@ -169,27 +172,24 @@
             return 'https://s3-media4.fl.yelpcdn.com/photo/LbzTc5MET1s82GEpqsMDXg/o.jpg';
         }
     }
-    var apiGoingurl='';
+    
     going.addEventListener('click',function(){
-        apiGoingurl=window.location.origin+'/isGoingTo/'+city+'/1/'+id;
-        ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', apiGoingurl+'/check', checkLog));
-    })
+        var apiCheck=window.location.origin+'/checkLog';
+        ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', apiCheck, checkLog));
+    });
     
     function checkLog(data){
-        console.log(data);
         if (data=='false'){
             login.style.display='block';
             lgnDir.click();
         }
         else{
-            console.log(' log')
-            console.log(apiGoingurl)
+            var apiGoingurl=window.location.origin+'/isGoingTo/'+city+'/1/'+id;
             ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', apiGoingurl, EditGoing));
         }
     }
     
     function EditGoing(data){
-        console.log(data)
         var info=JSON.parse(data);
         nbrGoing.innerHTML=info.nbrGoing;
     }
@@ -207,7 +207,6 @@
     function showFilterInfo(data){
         var info=JSON.parse(data);
         var business=info.businesses;
-        console.log(business[0])
         var dispCounter=0;
         for (var i=0;i<business.length;i++){
             if (business[i].id==id){
@@ -258,7 +257,7 @@
     }
     
 	function initMap() {
-        var uluru = {lat:lat, lng:lng}
+        var uluru = {lat:lat, lng:lng};
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: uluru

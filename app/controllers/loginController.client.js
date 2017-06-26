@@ -11,19 +11,6 @@
     var activ='rgb(255,255,255)';
     var unactiv='rgb(10,150,250)';
     
-    // var body=document.querySelector('body');
-    // var backgrounds=['/public/img/pexels-photo-110472.jpeg',
-    //                 '/public/img/pexels-photo-198485.jpeg',
-    //                 '/public/img/pexels-photo-424184.jpeg',
-    //                 '/public/img/city-cars-traffic-lights.jpeg',
-    //                 '/public/img/city-marketing-lights-night.jpg'];
-    // var rdm=Math.floor(Math.random()*backgrounds.length);
-    // console.log(rdm);
-    // var background='url('+backgrounds[rdm]+') no-repeat center center';
-    // body.style.background=background;
-    // body.style['background-size']= 'cover';
-    // body.style.width='100%';
-    // body.style.height='750px';
     var url=check(window.location.href);
     
     
@@ -37,7 +24,7 @@
             signBlock.style.display='none';
             sign.style.background=unactiv;
             sign.style.color=activ;
-            sign.style['box-shadow']='none'
+            sign.style['box-shadow']='none';
             log.style.background=activ;
             log.style.color=unactiv;
             log.style['box-shadow']='0px 0px 5px '+activ;
@@ -63,6 +50,18 @@
     
     if (url.slice(url.length-4,url.length)=='/log'){
         log.click();
-        console.log('ok')
+    }
+    
+    
+    
+     
+    function check(url){
+        for (var i=0; i<url.length;i++){
+            if(url[i]=='#'){
+                url=url.slice(0,i);
+                return url;
+            }
+        }
+        return url;
     }
 })();
